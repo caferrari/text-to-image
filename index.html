@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="MinefieldExperiment">
+<head>
+    <meta charset="utf-8">
+    <title>Minefield</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body ng-controller="IndexCtrl as ctrl">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Input</label>
+                    <textarea rows="5" class="form-control" id="input"></textarea>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Output Image</label>
+                    <div><img src="" id="image-output" /></div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Decoded</label>
+                    <textarea rows="5" class="form-control" id="decoded"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/scripts.js"></script>
+
+    <script>
+
+    var c = new Compressor();
+
+
+    var input = document.getElementById('input');
+    var output = document.getElementById('image-output');
+    var decoded = document.getElementById('decoded');
+
+    input.addEventListener('keyup', function(e) {
+        var value = e.target.value;
+
+        var result = c.compress(value);
+
+        var r = result.toImage();
+
+        output.src = r;
+    });
+
+    output.addEventListener('load', function(e) {
+        var data = c.decompressImage(e.target, function(c) {
+            decoded.value = c;
+        });
+
+    });
+
+
+    </script>
+
+
+</body>
+</html>
